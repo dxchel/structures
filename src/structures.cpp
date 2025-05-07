@@ -37,7 +37,7 @@ LinkedList<T>::~LinkedList(){
 };
 
 template <typename T>
-T *LinkedList<T>::index(int index){
+const T *LinkedList<T>::index(int index){
     /*
      * Get the element value at specific Index.
      * If negative index is used it will start from the last element, being -1 the last element.
@@ -76,7 +76,7 @@ void LinkedList<T>::insert(T *value, int index){
     return;
 };
 template <typename T>
-T *LinkedList<T>::remove(int index){
+const T *LinkedList<T>::remove(int index){
     /*
      * Remove the node at index, default is to remove the last one.
      * If negative index is used it will start from the last element, being -1 the last element.
@@ -114,13 +114,14 @@ void LinkedList<T>::reverse(){
     this->head = prev;
 };
 template <typename T>
-void LinkedList<T>::print(){
+std::string LinkedList<T>::str(){
     /* Print the LinkedList in a readable way. */
+    std::string representation = "[ ";
     LLNode<T> *element = this->head;
-    printf("[ ");
     while(element){
-        std::cout << *element->value << " ";
+        representation += std::to_string(*element->value) + " ";
         element = element->next;
     }
-    std::cout << "]" << std::endl;
+    representation += "]";
+    return representation;
 };

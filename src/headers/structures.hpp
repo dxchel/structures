@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <string>
 
 template <typename T>
 class LLNode{
@@ -29,11 +30,11 @@ class LinkedList{
 public:
     LinkedList(T *value=NULL);
     ~LinkedList();
-    T *index(int index);
+    const T *index(int index);
     void insert(T *value, int index=-1);
-    T *remove(int index=-1);
+    const T *remove(int index=-1);
     void reverse();
-    void print();
+    std::string str();
 };
 
 template <typename T, typename Y>
