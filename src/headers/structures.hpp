@@ -1,3 +1,8 @@
+/*
+ * Header for the common structures used within the code.
+ *
+ * Made by David Xchel Morales Hurtado
+ */
 #ifndef STRUCTS
 #define STRUCTS
 
@@ -6,6 +11,7 @@
 
 template <typename T>
 class LLNode{
+    /* LinkedList Node class with pointer to next node and a value. */
 public:
     T *value;
     LLNode<T> *next;
@@ -15,6 +21,7 @@ public:
 
 template <typename T>
 class LinkedList{
+    /* LinkedList class with pointer to head node and functions for inserting, removing, reversing and readable representation. */
     int length;
     LLNode<T> *head;
 
@@ -28,29 +35,31 @@ public:
     void print();
 };
 
-template <typename T>
+template <typename T, typename Y>
 class MNode{
-    int key;
-    T *value;
+    /* Map Node class with different key and value types. */
+    T *key;
+    Y *value;
 
 public:
-    MNode(int key=0, T *value=NULL);
+    MNode(T key=NULL, Y *value=NULL);
 };
 
-template <typename T>
+template <typename T, typename Y>
 class Map{
+    /* Map class with the size of the hash table, along with number of elements and the MNode map with the elements. */
     int size;
     int elements;
-    T *map;
+    MNode<T, Y> *map;
 
 public:
-    Map(int size=10, int key=0, T *value=NULL);
+    Map(int size=10, T key=NULL, Y *value=NULL);
     ~Map();
-    T *get(int key);
-    void set(int key, T *value);
-    int* keys(void);
-    MNode<T> *items(void);
-    T *remove(int key);
+    T *get(T *key);
+    void set(T *key, Y *value);
+    T *keys(void);
+    MNode<T, Y> *items(void);
+    Y *remove(T *key);
 };
 #endif
 

@@ -1,13 +1,19 @@
+/*
+ * Main structures code.
+ * Here lies the code for the basic structures taken into account.
+ *
+ * Made by David Xchel Morales Hurtado
+ */
 #include "headers/structures.hpp"
 
 template <typename T>
 LLNode<T>::LLNode(T *value, LLNode<T> *next)
     : value(value), next(next){};
 
-
 template <typename T>
 LinkedList<T>::LinkedList(T *value)
     :length(0), head(NULL) {
+    /* Initialize everything to an empty LinkedList, if a value is given use it to make a node. */
     if(!value) return;
 
     this->head = new LLNode<T>(value);
@@ -15,6 +21,7 @@ LinkedList<T>::LinkedList(T *value)
 };
 template <typename T>
 LinkedList<T>::~LinkedList(){
+    /* Delete all LinkedList Nodes. */
     LLNode<T> *prev = this->head;
     LLNode<T> *next = prev;
     while(next){
@@ -26,7 +33,12 @@ LinkedList<T>::~LinkedList(){
 
 template <typename T>
 T *LinkedList<T>::index(int index){
-    if(index >= this->length) index = this->length - 1;
+    /*
+     * Get the element value at specific Index.
+     * If negative index is used it will start from the last element, being -1 the last element.
+     * If the index is out of bounds, return NULL.
+     */
+    if(index >= this->length || index <= -this->length) return NULL;
     else index = index%this->length;
     LLNode<T> *element = this->head;
     for(int i=0; i < index; i++) element = element->next;
@@ -34,9 +46,14 @@ T *LinkedList<T>::index(int index){
 };
 template <typename T>
 void LinkedList<T>::insert(T *value, int index){
-    if(index >= this->length) index = this->length;
-    if(index < -this->length*2) index = 0;
+    /*
+     * Insert the value as the node at index, default is to insert at the end.
+     * If negative index is used it will start from the last element, being -1 to insert after last element.
+     * If the index is out of bounds, return and do nothing.
+     */
+    if(index >= this->length || index < -this->length) return;
     index = (index + this->length + 1)%(this->length + 1);
+    // Keep track of previous node for linking.
     LLNode<T> *prev = NULL;
     LLNode<T> *element = this->head;
     for(int i=0; i < index; i++){
@@ -44,6 +61,7 @@ void LinkedList<T>::insert(T *value, int index){
         element = element->next;
     }
     element = new LLNode<T>(value, element);
+    // Linking.
     if(prev) prev->next = element;
     else this->head = element;
     this->length += 1;
@@ -51,16 +69,21 @@ void LinkedList<T>::insert(T *value, int index){
 };
 template <typename T>
 T *LinkedList<T>::remove(int index){
-    if(!this->length) return NULL;
-    if(index >= this->length) index = this->length - 1;
-    if(index < -this->length*2) index = 0;
+    /*
+     * Remove the node at index, default is to remove the last one.
+     * If negative index is used it will start from the last element, being -1 the last element.
+     * If the index is out of bounds, return NULL and do nothing.
+     */
+    if(!this->length || index < -this->length || index >= this->length) return NULL;
     index = (index + this->length)%this->length;
+    // Keep track of previous node for linking.
     LLNode<T> *prev = NULL;
     LLNode<T> *next = this->head;
     for(int i=0; i < index; i++){
         prev = next;
         next = next->next;
     }
+    // Linking and node deletion.
     if(prev) prev->next = next->next;
     else this->head = next->next;
     this->length -= 1;
@@ -70,6 +93,7 @@ T *LinkedList<T>::remove(int index){
 };
 template <typename T>
 void LinkedList<T>::reverse(){
+    /* Reverse the whole LinkedList, using tail as head and linking from there. */
     LLNode<T> *prev = NULL;
     LLNode<T> *last = NULL;
     LLNode<T> *next = this->head;
@@ -83,10 +107,11 @@ void LinkedList<T>::reverse(){
 };
 template <typename T>
 void LinkedList<T>::print(){
+    /* Print the LinkedList in a readable way. */
     LLNode<T> *element = this->head;
     printf("[ ");
     while(element){
-        std::cout << element->value << " ";
+        std::cout << *element->value << " ";
         element = element->next;
     }
     std::cout << "]" << std::endl;
