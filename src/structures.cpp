@@ -9,6 +9,11 @@
 template <typename T>
 LLNode<T>::LLNode(T *value, LLNode<T> *next)
     : value(value), next(next){};
+template <typename T>
+LLNode<T>::~LLNode(){
+    delete this->value;
+};
+
 
 template <typename T>
 LinkedList<T>::LinkedList(T *value)
@@ -51,7 +56,10 @@ void LinkedList<T>::insert(T *value, int index){
      * If negative index is used it will start from the last element, being -1 to insert after last element.
      * If the index is out of bounds, return and do nothing.
      */
-    if(index >= this->length || index < -this->length) return;
+    if(index >= this->length || index < -this->length){
+        delete value;
+        return;
+    }
     index = (index + this->length + 1)%(this->length + 1);
     // Keep track of previous node for linking.
     LLNode<T> *prev = NULL;
@@ -87,7 +95,7 @@ T *LinkedList<T>::remove(int index){
     if(prev) prev->next = next->next;
     else this->head = next->next;
     this->length -= 1;
-    T *value = next->value;
+    T *value = new T(*next->value);
     delete next;
     return value;
 };

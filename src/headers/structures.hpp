@@ -17,6 +17,7 @@ public:
     LLNode<T> *next;
 
     LLNode(T *value=NULL, LLNode<T> *next=NULL);
+    ~LLNode();
 };
 
 template <typename T>

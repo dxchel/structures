@@ -37,9 +37,10 @@ int test_LinkedList(){
     printf("Adding 100 into 100 ");
     list->insert(new int(100), 100);
     list->print();
-    std::cout << "Here's index 4! " << *list->index(4) << std::endl;
-    list->reverse();
     printf("And now reversed! ");
+    list->reverse();
+    list->print();
+    std::cout << "Here's index 4! " << *list->index(4) << std::endl;
     list->print();
     std::cout << "Removing index 3: " << *list->remove(3) << std::endl;
     list->print();
