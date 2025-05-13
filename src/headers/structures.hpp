@@ -34,34 +34,6 @@ public:
     void insert(T *value, int index=-1);
     const T *remove(int index=-1);
     void reverse();
+    const LLNode<T> *iter();
     std::string str();
 };
-
-template <typename T, typename Y>
-class MNode{
-    /* Map Node class with different key and value types. */
-    T *key;
-    Y *value;
-
-public:
-    MNode(T key=NULL, Y *value=NULL);
-};
-
-template <typename T, typename Y>
-class Map{
-    /* Map class with the size of the hash table, along with number of elements and the MNode map with the elements. */
-    int size;
-    int elements;
-    MNode<T, Y> *map;
-
-public:
-    Map(int size=10, T key=NULL, Y *value=NULL);
-    ~Map();
-    T *get(T *key);
-    void set(T *key, Y *value);
-    T *keys(void);
-    MNode<T, Y> *items(void);
-    Y *remove(T *key);
-};
-#endif
-

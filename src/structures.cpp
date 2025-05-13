@@ -114,6 +114,11 @@ void LinkedList<T>::reverse(){
     this->head = prev;
 };
 template <typename T>
+const LLNode<T> *LinkedList<T>::iter(){
+    /* Get iterator by getting first element. */
+    return this->head;
+};
+template <typename T>
 std::string LinkedList<T>::str(){
     /* Print the LinkedList in a readable way. */
     std::string representation = "[ ";

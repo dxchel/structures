@@ -40,6 +40,13 @@ int test_LinkedList(){
     list->reverse();
     std::cout << "And now reversed!" << list->str() << std::endl;
     std::cout << "Here's index 4! " << *list->index(4) << list->str() << std::endl;
+    std::cout << "Using iterator in for loop" << std::endl;
+    const LLNode<int> *iter = list->iter();
+    while(iter != NULL){
+        std::cout << "Element " << *iter->value << std::endl;
+        iter = iter->next;
+    }
+    delete iter;
     std::cout << "Removing index 3: " << *list->remove(3) << list->str() << std::endl;
     std::cout << "Removing last index: " << *list->remove() << list->str() << std::endl;
     std::cout << "Removing index 20 (NULL): " << list->remove(20) << list->str() << std::endl;
