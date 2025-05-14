@@ -11,14 +11,23 @@
 #include <string>
 
 template <typename T>
+class LLNode;
+template <typename T>
+class LinkedList;
+
+template <typename T>
 class LLNode{
     /* LinkedList Node class with pointer to next node and a value. */
-public:
     T *value;
     LLNode<T> *next;
 
+public:
     LLNode(T *value=NULL, LLNode<T> *next=NULL);
     ~LLNode();
+    LLNode<T> *get_next();
+    void set_next(LLNode<T> *next);
+    T *get_value();
+    void set_value(T *next);
 };
 
 template <typename T>
@@ -30,10 +39,11 @@ class LinkedList{
 public:
     LinkedList(T *value=NULL);
     ~LinkedList();
-    const T *index(int index);
+    T *index(int index);
     void insert(T *value, int index=-1);
-    const T *remove(int index=-1);
+    T *remove(int index=-1);
     void reverse();
-    const LLNode<T> *iter();
+    LLNode<T> *iter();
     std::string str();
 };
+#endif
