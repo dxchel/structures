@@ -14,25 +14,25 @@ LLNode<T>::~LLNode(){
     delete this->value;
 };
 template <typename T>
-T *LLNode<T>::get_value(){
+T *LLNode<T>::get_value() const{
     /* Returns a constant pointer to the value. */
     return this->value;
 };
 template <typename T>
-LLNode<T> *LLNode<T>::get_next(){
+LLNode<T> *LLNode<T>::get_next() const{
     /* Returns a constant pointer to the next element linked. */
     return this->next;
-};
-template <typename T>
-void LLNode<T>::set_next(LLNode<T> *next){
-    /* Changes the pointer to the next element linked. */
-    this->next = next;
-    return;
 };
 template <typename T>
 void LLNode<T>::set_value(T *value){
     /* Changes the pointer to the value. */
     this->value = value;
+    return;
+};
+template <typename T>
+void LLNode<T>::set_next(LLNode<T> *next){
+    /* Changes the pointer to the next element linked. */
+    this->next = next;
     return;
 };
 
@@ -59,7 +59,7 @@ LinkedList<T>::~LinkedList(){
 };
 
 template <typename T>
-T *LinkedList<T>::index(int index){
+T *LinkedList<T>::index(int index) const{
     /*
      * Get the element value at specific Index.
      * If negative index is used it will start from the last element, being -1 the last element.
@@ -133,12 +133,12 @@ void LinkedList<T>::reverse(){
     this->head = prev;
 };
 template <typename T>
-LLNode<T> *LinkedList<T>::iter(){
+LLNode<T> *LinkedList<T>::iter() const{
     /* Get iterator by getting first element. */
     return this->head;
 };
 template <typename T>
-std::string LinkedList<T>::str(){
+std::string LinkedList<T>::str() const{
     /* Print the LinkedList in a readable way. */
     std::string representation = "[ ";
     LLNode<T> *element = this->head;
