@@ -15,6 +15,7 @@ struct LLNode{
     /* LinkedList Node class with pointer to next node and a value. */
     T *value;
     LLNode<T> *next;
+    LLNode(T *value, LLNode<T> *next = NULL);
 };
 
 template <typename T>

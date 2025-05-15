@@ -7,13 +7,17 @@
 #include "headers/structures.hpp"
 
 template <typename T>
+LLNode<T>::LLNode(T *value, LLNode<T> *next)
+    :value(value), next(next) {};
+
+
+template <typename T>
 LinkedList<T>::LinkedList(T *value)
     :length(0), head(NULL) {
     /* Initialize everything to an empty LinkedList, if a value is given use it to make a node. */
     if(!value) return;
 
-    this->head = new LLNode<T>;
-    this->head->value = value;
+    this->head = new LLNode<T>(value);
     this->length = 1;
 };
 template <typename T>
@@ -57,12 +61,10 @@ void LinkedList<T>::insert(T *value, int index){
         prev = element;
         element = element->next;
     }
-    LLNode<T> *new_element = new LLNode<T>;
-    new_element->value = value;
-    new_element->next = element;
+    element = new LLNode<T>(value, element);
     // Linking.
-    if(prev) prev->next = new_element;
-    else this->head = new_element;
+    if(prev) prev->next = element;
+    else this->head = element;
     this->length += 1;
     return;
 };
