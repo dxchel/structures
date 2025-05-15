@@ -7,43 +7,13 @@
 #include "headers/structures.hpp"
 
 template <typename T>
-LLNode<T>::LLNode(T *value, LLNode<T> *next)
-    : value(value), next(next){};
-template <typename T>
-LLNode<T>::~LLNode(){
-    delete this->value;
-};
-template <typename T>
-T *LLNode<T>::get_value() const{
-    /* Returns a constant pointer to the value. */
-    return this->value;
-};
-template <typename T>
-LLNode<T> *LLNode<T>::get_next() const{
-    /* Returns a constant pointer to the next element linked. */
-    return this->next;
-};
-template <typename T>
-void LLNode<T>::set_value(T *value){
-    /* Changes the pointer to the value. */
-    this->value = value;
-    return;
-};
-template <typename T>
-void LLNode<T>::set_next(LLNode<T> *next){
-    /* Changes the pointer to the next element linked. */
-    this->next = next;
-    return;
-};
-
-
-template <typename T>
 LinkedList<T>::LinkedList(T *value)
     :length(0), head(NULL) {
     /* Initialize everything to an empty LinkedList, if a value is given use it to make a node. */
     if(!value) return;
 
-    this->head = new LLNode<T>(value);
+    this->head = new LLNode<T>;
+    this->head->value = value;
     this->length = 1;
 };
 template <typename T>
@@ -52,7 +22,7 @@ LinkedList<T>::~LinkedList(){
     LLNode<T> *prev = this->head;
     LLNode<T> *next = prev;
     while(next){
-        next = prev->get_next();
+        next = prev->next;
         delete prev;
         prev = next;
     }
@@ -68,8 +38,8 @@ T *LinkedList<T>::index(int index) const{
     if(index >= this->length || index <= -this->length) return NULL;
     else index = index%this->length;
     LLNode<T> *element = this->head;
-    for(int i=0; i < index; i++) element = element->get_next();
-    return element->get_value();
+    for(int i=0; i < index; i++) element = element->next;
+    return element->value;
 };
 template <typename T>
 void LinkedList<T>::insert(T *value, int index){
@@ -85,12 +55,14 @@ void LinkedList<T>::insert(T *value, int index){
     LLNode<T> *element = this->head;
     for(int i=0; i < index; i++){
         prev = element;
-        element = element->get_next();
+        element = element->next;
     }
-    element = new LLNode<T>(value, element);
+    LLNode<T> *new_element = new LLNode<T>;
+    new_element->value = value;
+    new_element->next = element;
     // Linking.
-    if(prev) prev->set_next(element);
-    else this->head = element;
+    if(prev) prev->next = new_element;
+    else this->head = new_element;
     this->length += 1;
     return;
 };
@@ -108,13 +80,13 @@ T *LinkedList<T>::remove(int index){
     LLNode<T> *next = this->head;
     for(int i=0; i < index; i++){
         prev = next;
-        next = next->get_next();
+        next = next->next;
     }
     // Linking and node deletion.
-    if(prev) prev->set_next(next->get_next());
-    else this->head = next->get_next();
+    if(prev) prev->next = next->next;
+    else this->head = next->next;
     this->length -= 1;
-    T *value = new T(*next->get_value());
+    T *value = new T(*next->value);
     delete next;
     return value;
 };
@@ -126,8 +98,8 @@ void LinkedList<T>::reverse(){
     LLNode<T> *next = this->head;
     while(next){
         prev = next;
-        next = next->get_next();
-        prev->set_next(last);
+        next = next->next;
+        prev->next = last;
         last = prev;
     }
     this->head = prev;
@@ -143,8 +115,8 @@ std::string LinkedList<T>::str() const{
     std::string representation = "[ ";
     LLNode<T> *element = this->head;
     while(element){
-        representation += std::to_string(*element->get_value()) + " ";
-        element = element->get_next();
+        representation += std::to_string(*element->value) + " ";
+        element = element->next;
     }
     representation += "]";
     return representation;

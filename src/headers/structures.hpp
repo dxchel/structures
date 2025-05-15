@@ -11,18 +11,10 @@
 #include <string>
 
 template <typename T>
-class LLNode{
+struct LLNode{
     /* LinkedList Node class with pointer to next node and a value. */
     T *value;
     LLNode<T> *next;
-
-public:
-    LLNode(T *value=NULL, LLNode<T> *next=NULL);
-    ~LLNode();
-    T *get_value() const;
-    LLNode<T> *get_next() const;
-    void set_value(T *next);
-    void set_next(LLNode<T> *next);
 };
 
 template <typename T>

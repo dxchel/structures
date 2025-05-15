@@ -11,7 +11,7 @@ int test_LinkedList(){
      * Make a series of operations on LinkedList for functionality check
      */
     printf("Creating list with 1 ");
-    LinkedList<int> *list = new LinkedList<int>(new int(5));
+    LinkedList<int> *list = new LinkedList<int>(new int(1));
     std::cout << list->str() << std::endl;
     printf("Adding 2 ");
     list->insert(new int(2));
@@ -43,8 +43,8 @@ int test_LinkedList(){
     std::cout << "Using iterator in for loop" << std::endl;
     LLNode<int> *iter = list->iter();
     while(iter != NULL){
-        std::cout << "Element " << *(iter->get_value()) << std::endl;
-        iter = iter->get_next();
+        std::cout << "Element " << *(iter->value) << std::endl;
+        iter = iter->next;
     }
     delete iter;
     std::cout << "Removing index 3: " << *list->remove(3) << list->str() << std::endl;
