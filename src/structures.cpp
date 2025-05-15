@@ -9,11 +9,15 @@
 template <typename T>
 LLNode<T>::LLNode(T *value, LLNode<T> *next)
     :value(value), next(next) {};
+template <typename T>
+LLNode<T>::~LLNode(){
+    delete value;
+};
 
 
 template <typename T>
 LinkedList<T>::LinkedList(T *value)
-    :length(0), head(NULL) {
+    :length(0), head(nullptr) {
     /* Initialize everything to an empty LinkedList, if a value is given use it to make a node. */
     if(!value) return;
 
@@ -37,9 +41,9 @@ T *LinkedList<T>::index(int index) const{
     /*
      * Get the element value at specific Index.
      * If negative index is used it will start from the last element, being -1 the last element.
-     * If the index is out of bounds, return NULL.
+     * If the index is out of bounds, return nullptr.
      */
-    if(index >= this->length || index <= -this->length) return NULL;
+    if(index >= this->length || index <= -this->length) return nullptr;
     else index = index%this->length;
     LLNode<T> *element = this->head;
     for(int i=0; i < index; i++) element = element->next;
@@ -55,7 +59,7 @@ void LinkedList<T>::insert(T *value, int index){
     if(index >= this->length || index < -this->length) return;
     index = (index + this->length + 1)%(this->length + 1);
     // Keep track of previous node for linking.
-    LLNode<T> *prev = NULL;
+    LLNode<T> *prev = nullptr;
     LLNode<T> *element = this->head;
     for(int i=0; i < index; i++){
         prev = element;
@@ -73,12 +77,12 @@ T *LinkedList<T>::remove(int index){
     /*
      * Remove the node at index, default is to remove the last one.
      * If negative index is used it will start from the last element, being -1 the last element.
-     * If the index is out of bounds, return NULL and do nothing.
+     * If the index is out of bounds, return nullptr and do nothing.
      */
-    if(!this->length || index < -this->length || index >= this->length) return NULL;
+    if(!this->length || index < -this->length || index >= this->length) return nullptr;
     index = (index + this->length)%this->length;
     // Keep track of previous node for linking.
-    LLNode<T> *prev = NULL;
+    LLNode<T> *prev = nullptr;
     LLNode<T> *next = this->head;
     for(int i=0; i < index; i++){
         prev = next;
@@ -95,8 +99,8 @@ T *LinkedList<T>::remove(int index){
 template <typename T>
 void LinkedList<T>::reverse(){
     /* Reverse the whole LinkedList, using tail as head and linking from there. */
-    LLNode<T> *prev = NULL;
-    LLNode<T> *last = NULL;
+    LLNode<T> *prev = nullptr;
+    LLNode<T> *last = nullptr;
     LLNode<T> *next = this->head;
     while(next){
         prev = next;
