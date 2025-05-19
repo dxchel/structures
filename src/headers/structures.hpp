@@ -35,4 +35,32 @@ public:
     LLNode<T> *iter() const;
     std::string str() const;
 };
+    
+
+template <typename T>
+struct TNode{
+    /* LinkedList Node class with pointer to next node and a value. */
+    T value;
+    TNode<T> *left;
+    TNode<T> *right;
+    TNode(T value, TNode<T> *left = nullptr, TNode<T> *right = nullptr);
+    ~TNode();
+    std::string str() const;
+};
+
+template <typename T>
+class Tree{
+    /* Tree class with pointer to root node and functions for inserting, removing, reversing and readable representation. */
+    int size;
+    TNode<T> *root;
+
+public:
+    Tree();
+    ~Tree();
+    int get_size() const;
+    TNode<T> *find(T value) const;
+    void insert(T value);
+    void remove(T value);
+    std::string str() const;
+};
 #endif

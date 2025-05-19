@@ -7,7 +7,7 @@
 
 int main(int argc, char **argv){
     // Run tests
-    test_LinkedList();
-    exit(0);
+    //test_LinkedList();
+    exit(test_Tree());
 }
 
