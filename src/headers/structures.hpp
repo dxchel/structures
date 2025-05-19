@@ -45,6 +45,7 @@ struct TNode{
     TNode<T> *right;
     TNode(T value, TNode<T> *left = nullptr, TNode<T> *right = nullptr);
     ~TNode();
+    std::string str() const;
 };
 
 template <typename T>
@@ -56,9 +57,10 @@ class Tree{
 public:
     Tree();
     ~Tree();
+    int get_size() const;
     TNode<T> *find(T value) const;
     void insert(T value);
     void remove(T value);
-    std::string str(TNode<T> *node = nullptr, bool root = true) const;
+    std::string str() const;
 };
 #endif

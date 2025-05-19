@@ -136,6 +136,13 @@ TNode<T>::~TNode(){
     delete left;
     delete right;
 };
+template <typename T>
+std::string TNode<T>::str() const{
+    /* Get the Tree Node string representation. */
+    return std::to_string(this->value) + "{" +
+        (this->left ? this->left->str() : "") + ":" +
+        (this->right ? this->right->str() : "") + "}";
+};
 
 
 template <typename T>
@@ -148,42 +155,36 @@ Tree<T>::~Tree(){
     delete this->root;
 };
 template <typename T>
+int Tree<T>::get_size() const{
+    return this->size;
+};
+template <typename T>
 TNode<T> *Tree<T>::find(T value) const{
     /* find the value in the tree and return the node. */
     TNode<T> *node = this->root;
     while(node){
-        if(value < node->value) node = node->left;
-        else if(value > node->value) node = node->right;
-        else break;
+        if(value == node->value) break;
+        node = value > node->value ? node->right : node->left;
     }
     return node;
 };
 template <typename T>
 void Tree<T>::insert(T value){
     /* Insert an element with the value given into the tree. */
-    if(!this->root) this->root = new TNode(value);
-    TNode<T> *node = this->root;
-    while(node){
-        if(value < node->value)
-            if(node->left) node = node->left;
-            else node->left = new TNode(value);
-        else if(value > node->value)
-            if(node->right) node = node->right;
-            else node->right = new TNode(value);
-        else{
+    TNode<T> **node = &(this->root);
+    while(*node){
+        if(value == (*node)->value){
             this->size -= 1;
             break;
         }
+        node = value > (*node)->value ? &(*node)->right : &(*node)->left;
     }
-    this->size =+ 1;
+    if(!*node) *node = new TNode(value);
+    this->size += 1;
     return;
 };
 template <typename T>
-std::string Tree<T>::str(TNode<T> *node, bool root) const{
-    /* Print the LinkedList in a readable way. */
-    if(root) node = this->root;
-    if(!node) return std::string("");
-    return std::to_string(node->value) + "{" +
-        this->str(node->left, false) + ":" +
-        this->str(node->right, false) + "}";
+std::string Tree<T>::str() const{
+    /* Get Tree string representation in a readable way. */
+    return this->root ? this->root->str() : "{}";
 };
