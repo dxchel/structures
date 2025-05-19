@@ -128,3 +128,62 @@ std::string LinkedList<T>::str() const{
     return representation;
 };
 
+template <typename T>
+TNode<T>::TNode(T value, TNode<T> *left, TNode<T> *right)
+    :value(value), left(left), right(right) {};
+template <typename T>
+TNode<T>::~TNode(){
+    delete left;
+    delete right;
+};
+
+
+template <typename T>
+Tree<T>::Tree(){
+    this->size = 0;
+    this->root = nullptr;
+};
+template <typename T>
+Tree<T>::~Tree(){
+    delete this->root;
+};
+template <typename T>
+TNode<T> *Tree<T>::find(T value) const{
+    /* find the value in the tree and return the node. */
+    TNode<T> *node = this->root;
+    while(node){
+        if(value < node->value) node = node->left;
+        else if(value > node->value) node = node->right;
+        else break;
+    }
+    return node;
+};
+template <typename T>
+void Tree<T>::insert(T value){
+    /* Insert an element with the value given into the tree. */
+    if(!this->root) this->root = new TNode(value);
+    TNode<T> *node = this->root;
+    while(node){
+        if(value < node->value)
+            if(node->left) node = node->left;
+            else node->left = new TNode(value);
+        else if(value > node->value)
+            if(node->right) node = node->right;
+            else node->right = new TNode(value);
+        else{
+            this->size -= 1;
+            break;
+        }
+    }
+    this->size =+ 1;
+    return;
+};
+template <typename T>
+std::string Tree<T>::str(TNode<T> *node, bool root) const{
+    /* Print the LinkedList in a readable way. */
+    if(root) node = this->root;
+    if(!node) return std::string("");
+    return std::to_string(node->value) + "{" +
+        this->str(node->left, false) + ":" +
+        this->str(node->right, false) + "}";
+};

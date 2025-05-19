@@ -6,3 +6,4 @@
 #include "../structures.cpp"
 
 int test_LinkedList();
+int test_Tree();

@@ -8,7 +8,7 @@
 
 int test_LinkedList(){
     /* 
-     * Make a series of operations on LinkedList for functionality check
+     * Make a series of operations on LinkedList for functionality check.
      */
     printf("Creating list with 1 ");
     LinkedList<int> *list = new LinkedList<int>(new int(1));
@@ -58,5 +58,44 @@ int test_LinkedList(){
     std::cout << "Removing last index: " << *list->remove() << list->str() << std::endl;
     std::cout << "Removing last index: " << list->remove() << list->str() << std::endl;
     delete list;
+    return 0;
+};
+
+int test_Tree(){
+    /* 
+     * Make a series of operations on Tree for functionality check.
+     */
+    printf("Creating map \n");
+    Tree<int> *tree = new Tree<int>();
+    std::cout << tree->str() << std::endl;
+    printf("Adding 2 \n");
+    tree->insert(2);
+    std::cout << tree->str() << std::endl;
+    printf("Adding 5 \n");
+    tree->insert(5);
+    std::cout << tree->str() << std::endl;
+    printf("Adding 3 \n");
+    tree->insert(3);
+    std::cout << tree->str() << std::endl;
+    printf("Adding 1 \n");
+    tree->insert(1);
+    std::cout << tree->str() << std::endl;
+    printf("Adding 2 \n");
+    tree->insert(2);
+    std::cout << tree->str() << std::endl;
+    printf("Finding 7 \n");
+    std::cout << (tree->find(7) ? tree->find(7)->value : 0) << std::endl;
+    printf("Finding 3 \n");
+    std::cout << (tree->find(3) ? tree->find(3)->value : 0) << std::endl;
+    printf("Adding -1 \n");
+    tree->insert(-1);
+    std::cout << tree->str() << std::endl;
+    printf("Adding 10 \n");
+    tree->insert(10);
+    std::cout << tree->str() << std::endl;
+    printf("Adding 8 \n");
+    tree->insert(8);
+    std::cout << tree->str() << std::endl;
+    delete tree;
     return 0;
 };
