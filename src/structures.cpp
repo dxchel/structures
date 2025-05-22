@@ -184,6 +184,36 @@ void Tree<T>::insert(T value){
     return;
 };
 template <typename T>
+void Tree<T>::remove(T value){
+    /* Remove an element with the value given from the tree and return it. */
+    TNode<T> **node = &(this->root);
+    bool direction = false;
+    while(*node){
+        if(value == (*node)->value) break;
+        direction = value > (*node)->value;
+        node = direction ? &((*node)->right) : &((*node)->left);
+    }
+    if(!*node) return;
+    TNode<T> *temp_delete = *node, *temp_miss;
+    if(direction){
+        *node = temp_delete->right;
+        temp_miss = temp_delete->left;
+    }else{
+        *node = temp_delete->left;
+        temp_miss = temp_delete->right;
+    }
+    while(*node){
+        direction = value > (*node)->value;
+        node = direction ? &((*node)->right) : &((*node)->left);
+    }
+    *node = temp_miss;
+    temp_delete->left = nullptr;
+    temp_delete->right = nullptr;
+    delete temp_delete;
+    this->size -= 1;
+    return;
+}
+template <typename T>
 std::string Tree<T>::str() const{
     /* Get Tree string representation in a readable way. */
     return this->root ? this->root->str() : "{}";
