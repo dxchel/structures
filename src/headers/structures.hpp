@@ -13,10 +13,9 @@
 template <typename T>
 struct LLNode{
     /* LinkedList Node class with pointer to next node and a value. */
-    T *value;
+    T value;
     LLNode<T> *next;
-    LLNode(T *value, LLNode<T> *next = nullptr);
-    ~LLNode();
+    LLNode(T value, LLNode<T> *next = nullptr);
 };
 
 template <typename T>
@@ -26,11 +25,11 @@ class LinkedList{
     LLNode<T> *head;
 
 public:
-    LinkedList(T *value=nullptr);
+    LinkedList();
     ~LinkedList();
-    T *index(int index) const;
-    void insert(T *value, int index=-1);
-    T *remove(int index=-1);
+    T index(int index) const;
+    void insert(T value, int index=-1);
+    void remove(int index=-1);
     void reverse();
     LLNode<T> *iter() const;
     std::string str() const;
