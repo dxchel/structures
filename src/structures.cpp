@@ -7,23 +7,13 @@
 #include "headers/structures.hpp"
 
 template <typename T>
-LLNode<T>::LLNode(T *value, LLNode<T> *next)
+LLNode<T>::LLNode(T value, LLNode<T> *next)
     :value(value), next(next) {};
-template <typename T>
-LLNode<T>::~LLNode(){
-    delete value;
-};
 
 
 template <typename T>
-LinkedList<T>::LinkedList(T *value)
-    :length(0), head(nullptr) {
-    /* Initialize everything to an empty LinkedList, if a value is given use it to make a node. */
-    if(!value) return;
-
-    this->head = new LLNode<T>(value);
-    this->length = 1;
-};
+LinkedList<T>::LinkedList()
+    :length(0), head(nullptr) {};
 template <typename T>
 LinkedList<T>::~LinkedList(){
     /* Delete all LinkedList Nodes. */
@@ -37,26 +27,26 @@ LinkedList<T>::~LinkedList(){
 };
 
 template <typename T>
-T *LinkedList<T>::index(int index) const{
+T LinkedList<T>::index(int index) const{
     /*
      * Get the element value at specific Index.
      * If negative index is used it will start from the last element, being -1 the last element.
      * If the index is out of bounds, return nullptr.
      */
-    if(index >= this->length || index <= -this->length) return nullptr;
+    if(index >= this->length || index <= -this->length) return T();
     else index = index%this->length;
     LLNode<T> *element = this->head;
     for(int i=0; i < index; i++) element = element->next;
     return element->value;
 };
 template <typename T>
-void LinkedList<T>::insert(T *value, int index){
+void LinkedList<T>::insert(T value, int index){
     /*
      * Insert the value as the node at index, default is to insert at the end.
      * If negative index is used it will start from the last element, being -1 to insert after last element.
      * If the index is out of bounds, return and do nothing.
      */
-    if(index >= this->length || index < -this->length) return;
+    if((index > this->length || index < -this->length) && index != -1) return;
     index = (index + this->length + 1)%(this->length + 1);
     // Keep track of previous node for linking.
     LLNode<T> *prev = nullptr;
@@ -73,13 +63,13 @@ void LinkedList<T>::insert(T *value, int index){
     return;
 };
 template <typename T>
-T *LinkedList<T>::remove(int index){
+void LinkedList<T>::remove(int index){
     /*
      * Remove the node at index, default is to remove the last one.
      * If negative index is used it will start from the last element, being -1 the last element.
      * If the index is out of bounds, return nullptr and do nothing.
      */
-    if(!this->length || index < -this->length || index >= this->length) return nullptr;
+    if(!this->length || index < -this->length || index >= this->length) return;
     index = (index + this->length)%this->length;
     // Keep track of previous node for linking.
     LLNode<T> *prev = nullptr;
@@ -91,10 +81,9 @@ T *LinkedList<T>::remove(int index){
     // Linking and node deletion.
     if(prev) prev->next = next->next;
     else this->head = next->next;
-    this->length -= 1;
-    T *value = new T(*next->value);
     delete next;
-    return value;
+    this->length -= 1;
+    return;
 };
 template <typename T>
 void LinkedList<T>::reverse(){
@@ -121,7 +110,7 @@ std::string LinkedList<T>::str() const{
     std::string representation = "[ ";
     LLNode<T> *element = this->head;
     while(element){
-        representation += std::to_string(*element->value) + " ";
+        representation += std::to_string(element->value) + " ";
         element = element->next;
     }
     representation += "]";
