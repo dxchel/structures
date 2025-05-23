@@ -192,8 +192,7 @@ void Tree<T>::remove(T value){
         temp_miss = temp_delete->right;
     }
     while(*node){
-        direction = value > (*node)->value;
-        node = direction ? &((*node)->right) : &((*node)->left);
+        node = direction ? &((*node)->left) : &((*node)->right);
     }
     *node = temp_miss;
     temp_delete->left = nullptr;
