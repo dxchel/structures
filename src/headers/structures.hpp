@@ -16,6 +16,7 @@ struct LLNode{
     T value;
     LLNode<T> *next;
     LLNode(T value, LLNode<T> *next = nullptr);
+    ~LLNode();
 };
 
 template <typename T>
