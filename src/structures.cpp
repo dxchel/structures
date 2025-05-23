@@ -9,6 +9,10 @@
 template <typename T>
 LLNode<T>::LLNode(T value, LLNode<T> *next)
     :value(value), next(next) {};
+template <typename T>
+LLNode<T>::~LLNode(){
+    delete next;
+};
 
 
 template <typename T>
@@ -16,14 +20,8 @@ LinkedList<T>::LinkedList()
     :length(0), head(nullptr) {};
 template <typename T>
 LinkedList<T>::~LinkedList(){
-    /* Delete all LinkedList Nodes. */
-    LLNode<T> *prev = this->head;
-    LLNode<T> *next = prev;
-    while(next){
-        next = prev->next;
-        delete prev;
-        prev = next;
-    }
+    /* Delete all LinkedList Nodes recursively. */
+    delete this->head;
 };
 
 template <typename T>
@@ -81,6 +79,7 @@ void LinkedList<T>::remove(int index){
     // Linking and node deletion.
     if(prev) prev->next = next->next;
     else this->head = next->next;
+    next->next = nullptr;
     delete next;
     this->length -= 1;
     return;
